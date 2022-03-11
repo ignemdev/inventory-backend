@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Inventory.Api;
@@ -11,6 +12,12 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        #region Configurations
+        services.AddDbContextConfiguration(Configuration);
+        services.AddIdentityConfiguration();
+        services.AddAuthenticationConfiguration(Configuration);
+        #endregion
+
         services.AddCors();
 
         services.AddControllers()
@@ -40,6 +47,7 @@ public class Startup
 
         app.UseHttpsRedirection();
 
+        app.UseAuthorization();
         app.UseAuthorization();
 
         app.MapControllers();
