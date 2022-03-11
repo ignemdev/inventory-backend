@@ -14,7 +14,7 @@ public static class DbContextExtensions
 {
     public static IServiceCollection AddDbContextConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<InventoryContext>(options => options.UseSqlServer(configuration.GetConnectionString(Database.DefaultDbContext)));
+        services.AddDbContext<InventoryContext>(options => options.UseSqlServer(configuration.GetConnectionString(DatabaseConstants.DefaultDbContextName)));
 
         return services;
     }
