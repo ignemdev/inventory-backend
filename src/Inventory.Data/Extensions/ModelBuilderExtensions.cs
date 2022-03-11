@@ -11,7 +11,7 @@ namespace System;
 
 public static class ModelBuilderExtensions
 {
-    public static ModelBuilder AddIdentityMappings(this ModelBuilder modelBuilder)
+    public static ModelBuilder AddIdentityMapping(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Usuario>().ToTable(DatabaseConstants.UsersTableName)
                 .Ignore(u => u.TwoFactorEnabled)
@@ -27,7 +27,7 @@ public static class ModelBuilderExtensions
         return modelBuilder;
     }
 
-    public static ModelBuilder AddUnidadesMappings(this ModelBuilder modelBuilder)
+    public static ModelBuilder AddUnidadesMapping(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Unidad>(entity =>
         {
@@ -35,12 +35,12 @@ public static class ModelBuilderExtensions
                .IsRequired()
                .HasMaxLength(DatabaseConstants.UnidadDescripcionMaxLength)
                .IsUnicode(false);
-        }).AddBaseMappings();
+        }).AddBaseMapping();
 
         return modelBuilder;
     }
 
-    public static ModelBuilder AddRazonesMappings(this ModelBuilder modelBuilder)
+    public static ModelBuilder AddRazonesMapping(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Razon>(entity =>
         {
@@ -48,12 +48,12 @@ public static class ModelBuilderExtensions
                .IsRequired()
                .HasMaxLength(DatabaseConstants.RazonDescripcionMaxLength)
                .IsUnicode(false);
-        }).AddBaseMappings();
+        }).AddBaseMapping();
 
         return modelBuilder;
     }
 
-    public static ModelBuilder AddProductosMappings(this ModelBuilder modelBuilder)
+    public static ModelBuilder AddProductosMapping(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Producto>(entity =>
         {
@@ -79,12 +79,12 @@ public static class ModelBuilderExtensions
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
 
-        }).AddBaseMappings();
+        }).AddBaseMapping();
 
         return modelBuilder;
     }
 
-    public static ModelBuilder AddEntradasMappings(this ModelBuilder modelBuilder)
+    public static ModelBuilder AddEntradasMapping(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Entrada>(entity =>
         {
@@ -97,12 +97,12 @@ public static class ModelBuilderExtensions
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         
-        }).AddBaseMappings();
+        }).AddBaseMapping();
 
         return modelBuilder;
     }
 
-    public static ModelBuilder AddSalidasMappings(this ModelBuilder modelBuilder)
+    public static ModelBuilder AddSalidasMapping(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Salida>(entity =>
         {
@@ -121,12 +121,12 @@ public static class ModelBuilderExtensions
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
-        }).AddBaseMappings();
+        }).AddBaseMapping();
 
         return modelBuilder;
     }
 
-    private static ModelBuilder AddBaseMappings(this ModelBuilder modelBuilder)
+    private static ModelBuilder AddBaseMapping(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<BaseEntity>(entity =>
         {

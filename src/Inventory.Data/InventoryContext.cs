@@ -22,9 +22,15 @@ public class InventoryContext : IdentityDbContext<Usuario, IdentityRole<int>, in
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.AddUnidadesMapping();
+        builder.AddRazonesMapping();
+        builder.AddProductosMapping();
+        builder.AddEntradasMapping();
+        builder.AddSalidasMapping();
+
         base.OnModelCreating(builder);
 
-        builder.AddIdentityMappings();
+        builder.AddIdentityMapping();
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
