@@ -35,7 +35,7 @@ public static class ModelBuilderExtensions
                .IsRequired()
                .HasMaxLength(DatabaseConstants.UnidadDescripcionMaxLength)
                .IsUnicode(false);
-        }).AddBaseMapping();
+        }).AddBaseMapping<Unidad>();
 
         return modelBuilder;
     }
@@ -48,7 +48,7 @@ public static class ModelBuilderExtensions
                .IsRequired()
                .HasMaxLength(DatabaseConstants.RazonDescripcionMaxLength)
                .IsUnicode(false);
-        }).AddBaseMapping();
+        }).AddBaseMapping<Razon>();
 
         return modelBuilder;
     }
@@ -79,7 +79,7 @@ public static class ModelBuilderExtensions
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
 
-        }).AddBaseMapping();
+        }).AddBaseMapping<Producto>();
 
         return modelBuilder;
     }
@@ -97,7 +97,7 @@ public static class ModelBuilderExtensions
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         
-        }).AddBaseMapping();
+        }).AddBaseMapping<Entrada>();
 
         return modelBuilder;
     }
@@ -121,14 +121,14 @@ public static class ModelBuilderExtensions
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
-        }).AddBaseMapping();
+        }).AddBaseMapping<Salida>();
 
         return modelBuilder;
     }
 
-    private static ModelBuilder AddBaseMapping(this ModelBuilder modelBuilder)
+    private static ModelBuilder AddBaseMapping<TEntity>(this ModelBuilder modelBuilder) where TEntity : BaseEntity
     {
-        modelBuilder.Entity<BaseEntity>(entity =>
+        modelBuilder.Entity<TEntity>(entity =>
         {
             entity.HasKey(b => b.Id);
 
