@@ -36,7 +36,7 @@ public class SalidaServices : ISalidaServices
 
     public async Task<IEnumerable<Salida>> GetAllSalidas()
     {
-        var salidas = await _unitOfWork.Salidas.GetAllAsync(includeProperties: "Creador,Modificador,Producto",
+        var salidas = await _unitOfWork.Salidas.GetAllAsync(includeProperties: "Creador,Modificador,Producto,Razon",
             orderBy: s => s.OrderByDescending(x => x.Creado));
 
         return salidas;
@@ -48,7 +48,7 @@ public class SalidaServices : ISalidaServices
             throw new ArgumentNullException(Messages.E004);
 
         var dbSalida = await _unitOfWork.Salidas.GetFirstOrDefaultAsync(s => s.Id == salidaId,
-            includeProperties: "Creador,Modificador,producto");
+            includeProperties: "Creador,Modificador,Producto,Razon");
 
         if (dbSalida == null)
             throw new NullReferenceException(Messages.E005);
