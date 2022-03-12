@@ -15,10 +15,12 @@ public class UnidadRepository : Repository<Unidad>, IUnidadRepository
     public UnidadRepository(InventoryContext db) : base(db) => _db = db;
     public async Task<Unidad> UpdateAsync(Unidad unidad)
     {
-        var dbUnidad = await _db.Unidades.FirstOrDefaultAsync(c => c.Id == unidad.Id);
+        var dbUnidad = await _db.Unidades.FirstOrDefaultAsync(u => u.Id == unidad.Id);
 
         if (dbUnidad != null)
+        {
             dbUnidad!.Descripcion = unidad.Descripcion ?? dbUnidad.Descripcion;
+        }
 
         return dbUnidad!;
     }
