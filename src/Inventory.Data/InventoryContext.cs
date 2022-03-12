@@ -1,4 +1,5 @@
 ﻿using Inventory.Core.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,28 @@ public class InventoryContext : IdentityDbContext<Usuario, IdentityRole<int>, in
         builder.AddIdentityMapping();
     }
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public Task<int> SaveChangesWithUsuarioAsync(int usuarioId, CancellationToken cancellationToken = default)
+    {
+        foreach (var entityEntry in ChangeTracker.Entries<BaseEntity>())
+        {
+            if (entityEntry.State == EntityState.Added)
+            {
+                entityEntry.Entity.Creado = DateTime.Now;
+                entityEntry.Entity.Modificado = DateTime.Now;
+                entityEntry.Entity.CreadorId = usuarioId;
+                entityEntry.Entity.ModificadorId = usuarioId;
+            }
+            else if (entityEntry.State == EntityState.Modified)
+            {
+                entityEntry.Entity.Modificado = DateTime.Now;
+                entityEntry.Entity.ModificadorId = usuarioId;
+            }
+        }
+
+        return base.SaveChangesAsync(cancellationToken);
+    }
+
+    public Task<int> SaveChangesWithTimestampsAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entityEntry in ChangeTracker.Entries<BaseEntity>())
         {
@@ -47,6 +69,7 @@ public class InventoryContext : IdentityDbContext<Usuario, IdentityRole<int>, in
                 entityEntry.Entity.Modificado = DateTime.Now;
             }
         }
+
         return base.SaveChangesAsync(cancellationToken);
     }
 }

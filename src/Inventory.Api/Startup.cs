@@ -20,7 +20,7 @@ public class Startup
         #endregion
 
         services.AddCors();
-
+        services.AddHttpContextAccessor();
         services.AddControllers()
                 .AddJsonOptions(x =>
                 {
