@@ -1,4 +1,6 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Inventory.Core;
+using Inventory.Data;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -56,6 +58,7 @@ public class Startup
                     }
                 });
         });
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddEntitiesServices();
         services.AddAutoMapper(typeof(Startup));
     }
