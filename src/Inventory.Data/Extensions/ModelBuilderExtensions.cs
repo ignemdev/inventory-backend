@@ -132,11 +132,17 @@ public static class ModelBuilderExtensions
         {
             entity.HasKey(b => b.Id);
 
-            entity.HasOne(b => b.Usuario)
+            entity.HasOne(b => b.Creador)
                 .WithMany()
-                .HasForeignKey(b => b.UsuarioId)
+                .HasForeignKey(b => b.CreadorId)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            entity.HasOne(b => b.Modificador)
+                .WithMany()
+                .HasForeignKey(b => b.ModificadorId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.NoAction);
 
             entity.Property(b => b.Creado).HasColumnType("datetime");
             entity.Property(b => b.Modificado).HasColumnType("datetime");
