@@ -1,5 +1,6 @@
 ﻿using Inventory.Core.Entities;
 using Inventory.Core.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -18,10 +19,10 @@ public class UsuarioServices : IUsuarioServices
 {
     private readonly IConfiguration _configuration;
     private readonly UserManager<Usuario> _userManager;
+
     public UsuarioServices(
         IConfiguration configuration,
-        UserManager<Usuario> userManager
-        )
+        UserManager<Usuario> userManager)
     {
         _configuration = configuration;
         _userManager = userManager;
@@ -29,6 +30,8 @@ public class UsuarioServices : IUsuarioServices
 
     public async Task<Usuario> LoginUsuario(Usuario usuario)
     {
+
+
         var errors = new List<ValidationResult>();
         if (!Validator.TryValidateObject(usuario, new ValidationContext(usuario), errors, true))
             throw new InvalidOperationException(string.Join(Environment.NewLine, errors.Select(x => x.ErrorMessage)));
@@ -61,7 +64,7 @@ public class UsuarioServices : IUsuarioServices
 
         var result = await _userManager.CreateAsync(usuario, usuario.Password);
         //valida existencia por correo
-        if(!result.Succeeded)
+        if (!result.Succeeded)
             throw new InvalidOperationException(FormatedIdentityResultErrors(result.Errors));
 
         var dbUsuario = await _userManager.FindByNameAsync(usuario.UserName);
