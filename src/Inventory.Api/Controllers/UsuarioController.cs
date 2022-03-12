@@ -23,14 +23,14 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<ResponseModel<UsuarioResponse>>> RegisterUsuario([FromBody] UsuarioRegisterRequest usuarioRegisterRequest)
+    public async Task<ActionResult<ResponseModel<UsuarioTokenDetail>>> RegisterUsuario([FromBody] UsuarioRegister usuarioRegister)
     {
-        var response = new ResponseModel<UsuarioResponse>();
+        var response = new ResponseModel<UsuarioTokenDetail>();
         try
         {
-            var usuario = _mapper.Map<Usuario>(usuarioRegisterRequest);
+            var usuario = _mapper.Map<Usuario>(usuarioRegister);
             var registeredUsuario = await _usuarioServices.RegisterUsuario(usuario);
-            response.Data = _mapper.Map<UsuarioResponse>(registeredUsuario);
+            response.Data = _mapper.Map<UsuarioTokenDetail>(registeredUsuario);
 
             if (response.Data == null)
                 return NotFound();
@@ -45,14 +45,14 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<ResponseModel<UsuarioResponse>>> RegisterUsuario([FromBody] UsuarioLoginRequest usuarioLoginRequest)
+    public async Task<ActionResult<ResponseModel<UsuarioTokenDetail>>> RegisterUsuario([FromBody] UsuarioLogin usuarioLogin)
     {
-        var response = new ResponseModel<UsuarioResponse>();
+        var response = new ResponseModel<UsuarioTokenDetail>();
         try
         {
-            var usuario = _mapper.Map<Usuario>(usuarioLoginRequest);
+            var usuario = _mapper.Map<Usuario>(usuarioLogin);
             var loggedUsuario = await _usuarioServices.LoginUsuario(usuario);
-            response.Data = _mapper.Map<UsuarioResponse>(loggedUsuario);
+            response.Data = _mapper.Map<UsuarioTokenDetail>(loggedUsuario);
 
             if (response.Data == null)
                 return NotFound();

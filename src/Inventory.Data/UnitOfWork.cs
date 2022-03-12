@@ -45,7 +45,7 @@ public class UnitOfWork : IUnitOfWork
 
     public void Dispose()
     {
-        throw new NotImplementedException();
+        _db.Dispose();
     }
 
     public async Task SaveAsync()
@@ -58,7 +58,7 @@ public class UnitOfWork : IUnitOfWork
             return;
         }
         
-        var usuario = await _userManager.FindByEmailAsync(username);
+        var usuario = await _userManager.FindByNameAsync(username);
         await _db.SaveChangesWithUsuarioAsync(usuario.Id);
     }
 }

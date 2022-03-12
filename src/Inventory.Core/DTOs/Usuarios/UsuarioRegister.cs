@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Inventory.Core.DTOs.Usuarios;
 
-public class UsuarioResponse
+public class UsuarioRegister
 {
-    public int Id { get; set; }
     public string Username { get; set; } = null!;
-    public string Token { get; set; } = null!;
+    public string Email { get; set; } = null!;
+    public string Password { get; set; } = null!;
 }

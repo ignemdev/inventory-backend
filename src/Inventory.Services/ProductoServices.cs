@@ -76,7 +76,7 @@ public class ProductoServices : IProductoServices
             throw new ArgumentNullException(Messages.E004);
 
         var entradas = await _unitOfWork.Entradas.GetAllAsync(e => e.ProductoId == productoId,
-            includeProperties: "Creador,Modificador",
+            includeProperties: "Creador,Modificador,Producto",
             orderBy: e => e.OrderByDescending(x => x.Creado));
 
         return entradas;
@@ -88,7 +88,7 @@ public class ProductoServices : IProductoServices
             throw new ArgumentNullException(Messages.E004);
 
         var salidas = await _unitOfWork.Salidas.GetAllAsync(s => s.ProductoId == productoId,
-            includeProperties: "Creador,Modificador",
+            includeProperties: "Creador,Modificador,Producto,Razon",
             orderBy: e => e.OrderByDescending(x => x.Creado));
 
         return salidas;

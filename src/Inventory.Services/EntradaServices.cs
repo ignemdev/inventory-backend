@@ -66,7 +66,7 @@ public class EntradaServices : IEntradaServices
             throw new ArgumentNullException(Messages.E004);
 
         var dbEntrada = await _unitOfWork.Entradas.GetFirstOrDefaultAsync(e => e.Id == entradaId,
-            includeProperties: "Creador,Modificador,producto");
+            includeProperties: "Creador,Modificador,Producto");
 
         if (dbEntrada == null)
             throw new NullReferenceException(Messages.E005);
@@ -83,12 +83,14 @@ public class EntradaServices : IEntradaServices
             throw new ArgumentNullException(Messages.E004);
 
         var dbEntrada = await _unitOfWork.Entradas.GetByIdAsync(entrada.Id);
+        var cantidadAnterior = dbEntrada?.Cantidad ?? 0;
+
         var updatedEntrada = await _unitOfWork.Entradas.UpdateAsync(entrada);
 
         if (updatedEntrada == null || dbEntrada == null)
             throw new NullReferenceException(Messages.E005);
 
-        var stock = dbEntrada.Cantidad - updatedEntrada.Cantidad;
+        var stock = cantidadAnterior - updatedEntrada.Cantidad;//revisar
         await _unitOfWork.Productos.UpdateStockAsync(dbEntrada.ProductoId, stock*-1);
 
         await _unitOfWork.SaveAsync();
