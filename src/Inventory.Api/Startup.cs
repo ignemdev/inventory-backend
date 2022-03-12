@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.OpenApi.Models;
+using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -28,7 +29,34 @@ public class Startup
                 });
 
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(c =>
+        {
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+            {
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "JWT Authorization header using the Bearer scheme."
+
+            });
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                          new OpenApiSecurityScheme
+                          {
+                              Reference = new OpenApiReference
+                              {
+                                  Type = ReferenceType.SecurityScheme,
+                                  Id = "Bearer"
+                              }
+                          },
+                         new string[] {}
+                    }
+                });
+        });
+        services.AddEntitiesServices();
         services.AddAutoMapper(typeof(Startup));
     }
 

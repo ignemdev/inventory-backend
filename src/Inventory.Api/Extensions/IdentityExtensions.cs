@@ -18,7 +18,10 @@ public static class IdentityExtensions
 {
     public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services)
     {
-       services.AddIdentity<Usuario, IdentityRole<int>>()
+       services.AddIdentity<Usuario, IdentityRole<int>>(options =>
+       {
+           options.User.RequireUniqueEmail = true;
+       })
         .AddEntityFrameworkStores<InventoryContext>()
         .AddDefaultTokenProviders();
 
@@ -45,7 +48,10 @@ public static class IdentityExtensions
             options.RequireHttpsMetadata = false;
             options.TokenValidationParameters = new TokenValidationParameters()
             {
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"])),
+                RequireExpirationTime = false,
+                ValidateIssuer = false,
+                ValidateAudience = false,
             };
         });
 
