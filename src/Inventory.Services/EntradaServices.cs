@@ -76,6 +76,10 @@ public class EntradaServices : IEntradaServices
 
     public async Task<Entrada> UpdateEntrada(Entrada entrada)
     {
+        var errors = new List<ValidationResult>();
+        if (!Validator.TryValidateObject(entrada, new ValidationContext(entrada), errors, true))
+            throw new InvalidOperationException(string.Join(Environment.NewLine, errors.Select(x => x.ErrorMessage)));
+
         if (entrada == null)
             throw new ArgumentNullException(Messages.E003);
 

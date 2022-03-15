@@ -96,6 +96,10 @@ public class ProductoServices : IProductoServices
 
     public async Task<Producto> UpdateProducto(Producto producto)
     {
+        var errors = new List<ValidationResult>();
+        if (!Validator.TryValidateObject(producto, new ValidationContext(producto), errors, true))
+            throw new InvalidOperationException(string.Join(Environment.NewLine, errors.Select(x => x.ErrorMessage)));
+
         if (producto == null)
             throw new ArgumentNullException(Messages.E003);
 
