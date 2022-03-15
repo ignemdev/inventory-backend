@@ -31,8 +31,8 @@ public class ProductoController : ControllerBase
         var response = new ResponseModel<IEnumerable<ProductoDetail>>();
         try
         {
-            var productoes = await _productoServices.GetAllProductos();
-            response.Data = _mapper.Map<IEnumerable<ProductoDetail>>(productoes);
+            var productos = await _productoServices.GetAllProductos();
+            response.Data = _mapper.Map<IEnumerable<ProductoDetail>>(productos);
 
             if (response.Data == null)
                 return NotFound();
