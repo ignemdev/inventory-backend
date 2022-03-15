@@ -13,4 +13,5 @@ public class Messages
     public const string E003 = "Registro invalido.";
     public const string E004 = "El Id no puede ser 0.";
     public const string E005 = "Este registro no existe en la base de datos.";
+    public const string E006 = "Esta cantidad es invalida para este producto.";
 }

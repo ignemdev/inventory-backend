@@ -27,6 +27,14 @@ public class SalidaServices : ISalidaServices
             throw new ArgumentNullException(Messages.E003);
 
         var addedSalida = await _unitOfWork.Salidas.AddAsync(salida);
+
+        var producto = await _unitOfWork.Productos.GetByIdAsync(addedSalida.ProductoId);
+       
+        var stockMenorQueSalida = producto.Stock < addedSalida.Cantidad;
+
+        if (stockMenorQueSalida)
+            throw new InvalidOperationException(Messages.E006);
+
         await _unitOfWork.Productos.UpdateStockAsync(addedSalida.ProductoId, addedSalida.Cantidad * -1);
 
         await _unitOfWork.SaveAsync();
